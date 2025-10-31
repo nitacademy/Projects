@@ -9,7 +9,7 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>Jenkins Maven Sample</name>
   <description>Minimal project for Jenkins Maven plugin smoke test (Java 21 + JUnit 5)</description>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
