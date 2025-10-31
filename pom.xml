@@ -5,10 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>jenkins-maven-sample</artifactId>
+  <artifactId>jenkins-maven-war-sample</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>Jenkins Maven Sample</name>
-  <description>Minimal project for Jenkins Maven plugin smoke test (Java 21 + JUnit 5)</description>
+  <name>Jenkins Maven WAR Sample</name>
   <packaging>war</packaging>
 
   <properties>
@@ -18,7 +17,24 @@
   </properties>
 
   <dependencies>
-    <!-- JUnit 5 -->
+    <!-- Choose ONE of these servlet APIs depending on your app server: -->
+    <!-- For Tomcat 10+ / Jakarta EE 10 (jakarta.*) -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- For Tomcat 9 / Javax (javax.*), comment the jakarta one above and use this instead:
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+    -->
+
+    <!-- Tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -28,6 +44,7 @@
   </dependencies>
 
   <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
       <!-- Compile with Java 21 -->
       <plugin>
@@ -39,18 +56,27 @@
         </configuration>
       </plugin>
 
+      <!-- Build WAR; don't fail if you omit web.xml (annotation-based config) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
       <!-- Run JUnit 5 tests -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
-          <!-- keep it on classpath; avoids JPMS/module path surprises -->
           <useModulePath>false</useModulePath>
         </configuration>
       </plugin>
 
-      <!-- Sanity checks: require modern Maven & Java -->
+      <!-- Enforce Java & Maven versions -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
