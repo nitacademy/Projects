@@ -1,12 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Hello WebApp</title>
-</head>
+<html><head><title>Welcome</title></head>
 <body>
-<h1>Hello from JSP</h1>
-<p>This is a minimal webapp packaged as a WAR. Try the servlet: <a href="hello">/hello</a></p>
-</body>
-</html>
+  <h1>It works!</h1>
+  <p>WAR deployed via Jenkins → Tomcat.</p>
+  <p>Try the servlet: <a href="hello">/hello</a></p>
+</body></html>
